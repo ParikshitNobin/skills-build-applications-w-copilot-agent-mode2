@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 import os
 
 def api_root(request):
@@ -26,7 +26,11 @@ def api_root(request):
         api_url = "http://localhost:8000/api/"
     return JsonResponse({"api_root": api_url})
 
+def root_redirect(request):
+    return HttpResponseRedirect('/api/')
+
 urlpatterns = [
+    path('', root_redirect),
     path('admin/', admin.site.urls),
     path('api/', api_root),
 ]
